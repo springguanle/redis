@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace写上相应接口的名字-->
+<mapper namespace="com.bjpowernode.dao.StudentDao">
+
+
+    <select id="selectAllStudentsCount" resultType="int">
+        SELECT count(id) FROM t_student
+    </select>
+
+    <!--查询一条数据-->
+    <select id="selectStudentsByName" resultType="student">
+        SELECT id,name,age,score FROM t_student WHERE name LIKE '%' #{name} '%'
+    </select>
+
+    <!--新增-->
+    <insert id="insertStudent">
+        INSERT INTO t_student(name,age,score) VALUES (#{name},#{age},#{score})
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT @@identity
+        </selectKey>
+    </insert>
+</mapper>
